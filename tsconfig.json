@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "paths": {
+      "@db/*": ["src/db/*"]
+    },
     "module": "commonjs",
     "declaration": true,
     "removeComments": true,
