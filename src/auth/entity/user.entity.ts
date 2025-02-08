@@ -1,28 +1,29 @@
 export class User {
-  ID: string;
-  PWD: string;
-  TOKEN: string;
-  EMAIL: string;
-  NAME: string;
-  GENDER: string;
-  ADDRESS: string;
-  BIRTH: Date;
-  TELNUM: string;
-  SUBNUM: string;
-  PERSONAL: string;
-  RESIDENCE: string;
-  JOIN_DATE: Date;
-  RETIRE_DATE: Date;
-  POSITION: string;
-  EMPNUM: string;
-  JOB: string;
-  STATUS: string;
-  LV1: string;
-  LV2: string;
-  LV3: string;
-  LV4: string;
-  LV5: string;
-  CREATE_TIME: Date;
-  UPDATE_TIME: Date;
+  id: string;
+  pwd: string;
+  token: string;
+  email: string;
+  name: string;
+  gender: string;
+  address: string;
+  birth: Date;
+  telnum: string;
+  subnum: string;
+  personal: string;
+  residence: string;
+  join_date: Date;
+  retire_date: Date;
+  position: string;
+  empnum: string;
+  job: string;
+  status: string;
+  lv1: string;
+  lv2: string;
+  lv3: string;
+  lv4: string;
+  lv5: string;
+  create_time: Date;
+  update_time: Date;
+  
 }
 // Date

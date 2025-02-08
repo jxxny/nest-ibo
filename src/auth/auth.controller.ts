@@ -1,10 +1,13 @@
-import { BadRequestException, Controller, Get, InternalServerErrorException, NotFoundException, Param, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, InternalServerErrorException, NotFoundException, Param, Post, Query } from '@nestjs/common';
 import { DatabaseService } from '@db/database.service';
 import { User } from './entity/user.entity';
+import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly dbService: DatabaseService) {}
+  constructor(private readonly dbService: DatabaseService) {
+
+  }
 
   @Get()
   async findId(@Query('id') id: string) {
@@ -22,6 +25,31 @@ export class AuthController {
       }
 
       return { code: 200, data: res };
+    } catch (error) {
+      throw new InternalServerErrorException({ code: error.code || 500, message: error.message });
+    }
+  }
+
+  @Post()
+  @ApiOperation({ summary: '새 사용자 추가' })
+  @ApiResponse({ status: 201, description: '사용자가 성공적으로 추가되었습니다.' })
+  @ApiBody({ type: User })
+  async insertUser(@Body() body: User) {
+    try {
+      const { id, name, email } = body;
+      // ID 중복 체크
+      const existingUser = await this.dbService.query(`SELECT * FROM USER WHERE id = ?`, [id]);
+      if (existingUser.length > 0) {
+        throw new BadRequestException({ code: 400, message: '이미 존재하는 ID입니다.' });
+      }
+
+      // 사용자 추가
+      await this.dbService.query(
+        `INSERT INTO USER (id, name, email) VALUES (?, ?, ?)`,
+        [id,name,email]
+      );
+
+      return { code: 201, message: '사용자가 성공적으로 추가되었습니다.' };
     } catch (error) {
       throw new InternalServerErrorException({ code: error.code || 500, message: error.message });
     }
