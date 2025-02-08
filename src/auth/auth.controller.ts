@@ -1,13 +1,11 @@
 import { BadRequestException, Body, Controller, Get, InternalServerErrorException, NotFoundException, Param, Post, Query } from '@nestjs/common';
 import { DatabaseService } from '@db/database.service';
-import { User } from './entity/user.entity';
+import { User } from '../entity/user.entity';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly dbService: DatabaseService) {
-
-  }
+  constructor(private readonly dbService: DatabaseService) {}
 
   @Get()
   async findId(@Query('id') id: string) {
@@ -44,10 +42,7 @@ export class AuthController {
       }
 
       // 사용자 추가
-      await this.dbService.query(
-        `INSERT INTO USER (id, name, email) VALUES (?, ?, ?)`,
-        [id,name,email]
-      );
+      await this.dbService.query(`INSERT INTO USER (id, name, email) VALUES (?, ?, ?)`, [id, name, email]);
 
       return { code: 201, message: '사용자가 성공적으로 추가되었습니다.' };
     } catch (error) {

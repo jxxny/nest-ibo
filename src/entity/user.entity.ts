@@ -24,6 +24,5 @@ export class User {
   lv5: string;
   create_time: Date;
   update_time: Date;
-  
 }
 // Date
